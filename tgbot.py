@@ -42,7 +42,7 @@ def stepik_parser():
 
         #Also removed the regex and did a simple tag and class search, because now I can get the data normally.
         products = soup.find_all('a', class_='course-card__title')
-        course_title = [product.text.strip() for product in products]
+        course_title = [f'{i + 1}. {product.text.strip()}' for i, product in enumerate(products)]
         return course_title
     finally:
         browser.quit()
@@ -64,8 +64,7 @@ async def start_command(message: types.Message):
 @dp.message_handler(lambda message: message.text == "Show all products", state=ProductStates.MENU)
 async def show_all_products(message: types.Message, state: FSMContext):
     products = stepik_parser()
-    course_titles = [product.text.strip() for product in products]
-    await message.answer(' '.join(course_titles))
+    await message.answer('\n'.join(products))
     await state.finish()
 
 
@@ -73,8 +72,7 @@ async def show_all_products(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: message.text == "Show first 5 products", state=ProductStates.MENU)
 async def show_first_5_products(message: types.Message, state: FSMContext):
     products = stepik_parser()
-    course_titles = [product.text.strip() for product in products[:5]]
-    await message.answer(' '.join(course_titles))
+    await message.answer('\n'.join(products[:5]))
     await state.finish()
     
 
