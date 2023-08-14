@@ -2,13 +2,14 @@ import os
 import asyncio
 import logging
 
-from aiogram import types
+from aiogram import Bot, types, Dispatcher, executor
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from aiogram import Bot, Dispatcher, executor
 from dotenv import load_dotenv
+from parser import stepik_parser
 
 
 load_dotenv()
@@ -16,7 +17,8 @@ load_dotenv()
 # Bot token can be obtained via https://t.me/BotFather
 BOT_TOKEN = os.getenv('TELEGRAM_BOT')
 bot = Bot(token=BOT_TOKEN)
-dp = Dispatcher(bot)
+storage = MemoryStorage()
+dp = Dispatcher(bot, storage=MemoryStorage())
 
 
 class ProductStates(StatesGroup):
