@@ -12,7 +12,8 @@ def stepik_parser():
     try:
         browser.get(url)
         soup = BeautifulSoup(browser.page_source, 'html.parser')
-
+        
+        #Also removed the regex and did a simple tag and class search, because now I can get the data normally.
         products = soup.find_all('a', class_='course-card__title')
         course_title = [f'{i + 1}. {product.text.strip()}' for i, product in enumerate(products)]
         return course_title
