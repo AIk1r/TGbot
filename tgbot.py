@@ -1,7 +1,6 @@
 import asyncio
 import logging
 import os
-import requests
 
 from aiogram import Bot, types, Dispatcher, executor
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -9,10 +8,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
-from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -27,25 +23,6 @@ class ProductStates(StatesGroup):
     MENU = State()
     SHOW_ALL = State()
     SHOW_FIRST_5 = State()
-
-
-#I've redesigned the parser itself, I'm using selenium to get JS data and further work with HTML.
-def stepik_parser():
-    url = "https://stepik.org/catalog"
-
-    options = Options()
-    options.headless = True
-    browser = webdriver.Chrome(options=options)
-    try:
-        browser.get(url)
-        soup = BeautifulSoup(browser.page_source, 'html.parser')
-
-        #Also removed the regex and did a simple tag and class search, because now I can get the data normally.
-        products = soup.find_all('a', class_='course-card__title')
-        course_title = [f'{i + 1}. {product.text.strip()}' for i, product in enumerate(products)]
-        return course_title
-    finally:
-        browser.quit()
 
 
 #This is the command itself for the bot, which will output the information we need when we enter it.
