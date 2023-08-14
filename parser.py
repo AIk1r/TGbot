@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 
 
+#I've redesigned the parser itself, I'm using selenium to get JS data and further work with HTML.
 def stepik_parser():
     url = "https://stepik.org/catalog"
 
