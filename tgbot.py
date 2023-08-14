@@ -1,13 +1,6 @@
-import asyncio
-import logging
 import os
 
-from aiogram import Bot, types, Dispatcher, executor
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters import Command
-from aiogram.dispatcher.filters.state import State, StatesGroup
-
+from aiogram import Bot, Dispatcher, executor
 from dotenv import load_dotenv
 
 load_dotenv()
