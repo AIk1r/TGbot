@@ -26,6 +26,7 @@ class ProductStates(StatesGroup):
     SHOW_FIRST_5 = State()
 
 
+# Function for sending notifications
 async def send_alert(user_id: int, text: str):
     await bot.send_message(user_id, text)
 
